@@ -71,8 +71,8 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', indexRouter);
-app.use('/contact-list', contactRouter);
+app.use('/api', indexRouter);
+app.use('/api/contact-list', contactRouter);//protected should be
 
 // Passport User Configuration
 

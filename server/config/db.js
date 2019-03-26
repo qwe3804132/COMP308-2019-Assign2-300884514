@@ -1,3 +1,4 @@
 module.exports = {
-   "URI" : "mongodb://localhost/demo"
+   "URI" : "mongodb://localhost/demo",
+   "secret":"SomeSecret"
 }
