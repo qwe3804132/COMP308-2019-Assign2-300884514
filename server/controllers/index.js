@@ -1,10 +1,14 @@
 let express = require('express');
 let mongoose = require('mongoose');
 let passport = require('passport');
+let jwt=require('jsonwebtoken');
+let DB =require('../config/db');
 
 // define the User Model
 let userModel = require('../models/user');
 let User = userModel.User; // alias for the user Model - use object
+
+/*
 
 module.exports.displayHomePage = (req, res, next) => {
     res.render('index', { title: 'Home',
@@ -46,16 +50,44 @@ module.exports.displayLoginPage = (req, res, next) => {
   }
 }
 
+*/
 
-module.exports.processLoginPage = 
-    passport.authenticate('local', {
-    successRedirect: '/contact-list',
-    failureRedirect: '/login',
-    failureFlash: 'bad login',
-    failureMessage: 'bad login'
-  });
+module.exports.processLoginPage = (req,res,next)=>{
+  passport.authenticate('local',(err,user,info)=>{
+    if(err){
+      return next(err);
+    }
+    if(!user){
+      return res.json({success:false,msg:'Error:Failed to log in user!'});
+    }
+    req.logIn(user,(err)=>{
+      if(err){
+        return next(err);
+      }
+      const payload ={
+        id:user._id,
+        displayName:user.displayName,
+        username:user.username,
+        email:user.email
+      }
 
+      const authToken=jwt.sign(payload,DB.secret,{
+        expiresIn:604800
+      });
 
+       return res.json({success:true,msg:'User logged in Successfully!',user:{
+        id:user._id,
+        displayName:user.displayName,
+        username:user.username,
+        email:user.email
+       },token:authToken});
+    });
+  })(req,res,next);
+}
+  
+  
+
+/*
 module.exports.displayRegistrationPage = (req, res, next) => {
   if(!req.user) {
     // render the registration page
@@ -70,6 +102,8 @@ module.exports.displayRegistrationPage = (req, res, next) => {
   }
 }
 
+*/
+
 module.exports.processRegistrationPage = (req, res, next)=>{
 
   let newUser = new User({
@@ -79,33 +113,23 @@ module.exports.processRegistrationPage = (req, res, next)=>{
     displayName: req.body.displayName
   });
 
-  User.register(
-    newUser,
-    req.body.password,
-    //perform registration
-    (err) => {
-      // check if there is an error
+  User.register(newUser,req.body.password, (err) => {
       if(err) {
         console.log('Error inserting new user');
         if(err.name == "UserExistsError") {
-          req.flash('registerMessage', 'Registration Error: User Already Exists');
+          console.log("Error:User already existst");
         }
-        return res.render('auth/register', {
-          title: "Register",
-          messages: req.flash('registerMessage'),
-          displayName: req.user ? req.user.displayName : ''
-        });
-      }
+        return res.json({success:false,msg:'Error:Failed to register  user!'});
+      }else{
       // if no error, then registration is successful
 
       // redirect the user
-      return passport.authenticate('local')(req, res, ()=>{
-        res.redirect('/');
-      });
-    });
+      return res.json({success:true,msg:'User register successfully'});
+    }
+  });
 }
 
 module.exports.performLogout = (req, res, next) => {
   req.logout();
-  res.redirect('/'); // redirect back to home page
-}
+  res.json({success:true,msg:'User successfully log out'});
+};
