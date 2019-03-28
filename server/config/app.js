@@ -73,6 +73,9 @@ app.use(passport.session());
 
 app.use('/api', indexRouter);
 app.use('/api/contact-list', contactRouter);//protected should be
+app.get('*',(req,res)=>{
+  res.sendfile(path.join(__dirname,'../../public/index.html'));
+})
 
 // Passport User Configuration
 
