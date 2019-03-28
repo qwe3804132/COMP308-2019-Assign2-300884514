@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ContactListService } from 'src/app/services/contact-list.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
+import { Router } from '@angular/router';
+import { Contact } from 'src/app/models/contact';
 
 @Component({
   selector: 'app-contact-list',
@@ -6,10 +10,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contact-list.component.css']
 })
 export class ContactListComponent implements OnInit {
+  contacts:Contact[];
 
-  constructor() { }
+  constructor(
+    private contaciListService:ContactListService,
+    private flashMessage:FlashMessagesService,
+    private router:Router
+  ) { }
 
   ngOnInit() {
+    this.contacts=Array<Contact>();
+    this.displayContactList();
+  }
+  displayContactList(): void {
+this.contaciListService.getList().subscribe(data=>{
+  if(data.success){
+    this.contacts=data.contactList;
+  }else{
+    this.flashMessage.show('User must be logged-in',{cssClass:'alert-danger',timeOut:3000});
+  }
+});
   }
 
 }
