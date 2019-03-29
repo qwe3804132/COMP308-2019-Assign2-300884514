@@ -19,12 +19,13 @@ export class ContactListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.contacts=Array<Contact>();
+    this.contacts=new Array<Contact>();
     this.displayContactList();
   }
   displayContactList(): void {
 this.contaciListService.getList().subscribe(data=>{
   if(data.success){
+    console.log(data);
     this.contacts=data.contactList;
   }else{
     this.flashMessage.show('User must be logged-in',{cssClass:'alert-danger',timeOut:3000});
