@@ -13,6 +13,11 @@ contact:Contact
   constructor() { }
 
   ngOnInit() {
+    this.contact=new Contact();
+  }
+  
+  private onDeatilsPageSubmit():void{
+
   }
 
 }
