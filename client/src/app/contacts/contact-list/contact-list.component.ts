@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ContactListService } from 'src/app/services/contact-list.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
+
 import { Contact } from 'src/app/models/contact';
 
 @Component({
@@ -10,33 +11,34 @@ import { Contact } from 'src/app/models/contact';
   styleUrls: ['./contact-list.component.css']
 })
 export class ContactListComponent implements OnInit {
-  contacts:Contact[];
+  contacts: Contact[];
 
   constructor(
-    private contaciListService:ContactListService,
-    private flashMessage:FlashMessagesService,
-    private router:Router
+    private contactListService: ContactListService,
+    private flashMessage: FlashMessagesService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.contacts=new Array<Contact>();
+    this.contacts = new Array<Contact>();
+
     this.displayContactList();
   }
 
-  private onDeleteClick():void{
-    if(!confirm('Are you sure?')){
+  private onDeleteClick(): void {
+    if(!confirm('Are You Sure?')) {
       this.router.navigate(['/contact/contact-list']);
     }
   }
+
   displayContactList(): void {
-this.contaciListService.getList().subscribe(data=>{
-  if(data.success){
-    console.log(data);
-    this.contacts=data.contactList;
-  }else{
-    this.flashMessage.show('User must be logged-in',{cssClass:'alert-danger',timeOut:3000});
-  }
-});
+    this.contactListService.getList().subscribe(data => {
+      if(data.success) {
+        this.contacts = data.contactList;
+      } else {
+        this.flashMessage.show('User must be logged-in', {cssClass: 'alert-danger', timeOut: 3000});
+      }
+    });
   }
 
 }
