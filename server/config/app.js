@@ -72,7 +72,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/api', indexRouter);
-app.use('/api/contact-list', contactRouter);//protected should be
+app.use('/api/contact-list',passport.authenticate('jwt',{session:false}), contactRouter);//protected should be
 app.get('*',(req,res)=>{
   res.sendfile(path.join(__dirname,'../../public/index.html'));
 })
