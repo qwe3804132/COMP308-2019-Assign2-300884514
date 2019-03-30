@@ -15,6 +15,7 @@ const routes: Routes = [
   {path:'services',component:ServicesComponent,data:{title:'Services'}},
   {path:'contact',component:ContactComponent,data:{title:'Contact'}},
   {path:'contact/contact-list',component:ContactListComponent,data:{title:'Contact list'}},
+  {path:'contact/contact-list/add'}
 
   {path:'',redirectTo:'/home',pathMatch:'full'},
   {path:'**',component:PageNotFoundComponent},
