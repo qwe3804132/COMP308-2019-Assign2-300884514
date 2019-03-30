@@ -3,12 +3,15 @@ import{HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {Contact} from '../models/contact';
 import { Observable } from 'rxjs';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactListService {
-private endpoint='http://localhost:3000/api/contact-list';
+private user:User;
+
+private endpoint='http://localhost:3000/api/contact-list/';
 private httpOptions ={
   headers:new HttpHeaders({
     'Content-Type':'application/json',
@@ -20,4 +23,11 @@ private httpOptions ={
   public getList():Observable<any>{
     return this.http.get<any>(this.endpoint,this.httpOptions);
   }
+
+public addContact(contact:Contact):Observable<any>{
+  return this.http.post<any>(this.endpoint+'add',contact,this.httpOptions);
+}
+
+
+
 }
