@@ -11,16 +11,13 @@ module.exports.displayContactList = (req, res, next) =>{
             return console.error(err);
         }
         else {
-           // console.log(contactList);
-
-           res.json({success:true,msg:'Contact list displayed successfully',contactList:contactList,user:req.user});
-            
+           res.json({success: true, msg: 'Contact List Displayed Successfully', contactList: contactList, user: req.user});
         }
     });
 }
 
 module.exports.displayAddPage = (req, res, next) => {
-    res.json({success:true,msg:'success displayed add page'});
+    res.json({success: true, msg: 'Successfully Displayed Add Page'});
 }
 
 module.exports.processAddPage = (req, res, next) => {
@@ -37,8 +34,7 @@ module.exports.processAddPage = (req, res, next) => {
             res.end(err);
         }
         else {
-            // refresh the contact list
-            res.json({success:true,msg:'Successfully added new contact'});
+            res.json({success: true, msg: 'Successfully Added New Contact'});
         }
     });
 }
@@ -53,7 +49,7 @@ module.exports.displayEditPage = (req, res, next) => {
         }
         else
         {
-            res.json({success:true,msg:'successfully display contact add',contact:contactObject});
+            res.json({success: true, msg: 'Successfully Displayed Contact to Edit', contact: contactObject});
         }
     });
 }
@@ -74,8 +70,7 @@ module.exports.processEditPage = (req, res, next) => {
             res.end(err);
         }
         else {
-            // refresh the contact list
-            res.json({success:true,msg:'Successfully Edited contact',contact:updatedContact});
+            res.json({success: true, msg: 'Successfully Edited Contact', contact: updatedContact});
         }
     })
 }
@@ -89,8 +84,7 @@ module.exports.performDelete = (req, res, next) => {
             res.end(err);
         }
         else {
-            // refresh the contact list
-            res.json({success:true,msg:'Deleted contact successfully'});        }
+            res.json({success: true, msg: 'Successfully Deleted Contact'});
+        }
     });
 }
-

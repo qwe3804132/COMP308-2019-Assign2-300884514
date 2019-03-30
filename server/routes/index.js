@@ -3,6 +3,7 @@ let router = express.Router();
 
 let indexController = require('../controllers/index');
 
+
 /* GET home page. */
 //router.get('/', indexController.displayHomePage);
 
@@ -18,19 +19,20 @@ let indexController = require('../controllers/index');
 /* GET contact page. */
 //router.get('/contact', indexController.displayContactPage);
 
-/* GET - display login page */
+/* GET - displays the Login Page */
 //router.get('/login', indexController.displayLoginPage);
 
-/* POST - Process Login page */
+/* POST - processes the Login Page */
 router.post('/login', indexController.processLoginPage);
 
-/* GET - display the registration page */
-//router.get('/register', indexController.displayRegistrationPage);
+/* GET - displays the User Registration Page */
+//router.get('/register', indexController.displayRegisterPage);
 
-/* POST - Process the registration page */
-router.post('/register', indexController.processRegistrationPage);
+/* POST - processes the User Registration Page */
+router.post('/register', indexController.processRegisterPage);
 
-/* GET - perform the logout request */
+/* GET - perform user logout */
 router.get('/logout', indexController.performLogout);
+
 
 module.exports = router;
