@@ -39,7 +39,7 @@ contact:Contact
     });
   }
   
-  private onDeatilsPageSubmit():void{
+   onDeatilsPageSubmit():void{
 switch(this.title){
   case 'Add Contact':
   this.contactListService.addContact(this.contact).subscribe(data=>{
