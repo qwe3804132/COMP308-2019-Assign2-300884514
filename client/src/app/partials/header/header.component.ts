@@ -19,7 +19,6 @@ user:User
 
   ngOnInit() {
     this.user=new User();
-    this.user=JSON.parse(localStorage.getItem('user'));
   }
 
 
@@ -30,6 +29,10 @@ user:User
     });
   }
   isLoggedIn():boolean{
-    return this.authService.loggedIn();
+const result = this.authService.loggedIn();
+if(result){
+  this.user = JSON.parse(localStorage.getItem('user')); 
+}    
+return result;
   }
 }
